@@ -10,4 +10,9 @@ Decryption:
 
 Our decryption function takes the inputted encrypted code from the user and the shift number of the message. It then uses the same ASCII table to turn the numbers back into the letters and use the shift key to get the message back to the correct characters. Once the decryption function sees a -1 it knows the message is complete and can be sent back to the user. 
 
+Delegation: 
+
+Encryption - Quinn
+Decryption - Crawford
+
     
