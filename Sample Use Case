@@ -1,4 +1,5 @@
-This program can also be used to ecrypt a password before it being stored locally on the device. The user can then use the personal shift key to retrieve the password ensuring security. This is useful for basic applications where some obstruction is needed for password protection. 
+This program can also be used to ecrypt a password before it being stored locally on the device. The user can then use the personal shift key to retrieve the password ensuring security.
+This is useful for basic applications where some obstruction is needed for password protection. 
 
 Updated Code to be usable in this case: 
 #include <iostream>
