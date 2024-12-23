@@ -16,4 +16,8 @@ Encryption - Quinn
 
 Decryption - Crawford
 
+Main Function - Quinn
+
+Project Report - Crawford
+
     
