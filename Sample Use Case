@@ -1,0 +1,84 @@
+This program can also be used to ecrypt a password before it being stored locally on the device. The user can then use the personal shift key to retrieve the password ensuring security. This is useful for basic applications where some obstruction is needed for password protection. 
+
+Updated Code to be usable in this case: 
+#include <iostream>
+#include <fstream>
+#include <cstring>
+using namespace std;
+
+void encrypt(char input[], int shift, int EncryptedNumbers[]) {
+    for (size_t i = 0; i < strlen(input); ++i) {
+        EncryptedNumbers[i] = static_cast<int>(input[i]) + shift;
+    }
+    EncryptedNumbers[strlen(input)] = -1;
+}
+
+void decrypt(int EncryptedNumbers[], int shift, char output[]) {
+    int i = 0;
+    while (EncryptedNumbers[i] != -1) {
+        output[i] = static_cast<char>(EncryptedNumbers[i] - shift);
+        ++i;
+    }
+    output[i] = '\0'; // Null-terminate the string
+}
+
+int main() {
+    int option, shift;
+    int EncryptedNumbers[300];
+    char password[100];
+    char decryptedPassword[100];
+
+    cout << "Choose an option below: " << endl;
+    cout << "1. Save a password" << endl;
+    cout << "2. Retrieve a password" << endl;
+    cin >> option;
+    cin.ignore();
+
+    if (option == 1) {
+        // Encrypt and save the password
+        cout << "Enter the password you want to save: " << endl;
+        cin.getline(password, 100);
+
+        cout << "Enter a shift value for encryption: " << endl;
+        cin >> shift;
+
+        encrypt(password, shift, EncryptedNumbers);
+
+        // Save encrypted password to a file
+        ofstream file("password.txt");
+        for (int i = 0; EncryptedNumbers[i] != -1; ++i) {
+            file << EncryptedNumbers[i] << " ";
+        }
+        file << "-1"; // End marker
+        file.close();
+
+        cout << "Password saved successfully!" << endl;
+
+    } else if (option == 2) {
+        // Retrieve and decrypt the password
+        cout << "Enter the shift value used for encryption: " << endl;
+        cin >> shift;
+
+        // Read encrypted password from the file
+        ifstream file("password.txt");
+        if (!file) {
+            cout << "No password saved!" << endl;
+            return 1;
+        }
+
+        int value, i = 0;
+        while (file >> value && value != -1) {
+            EncryptedNumbers[i++] = value;
+        }
+        EncryptedNumbers[i] = -1; // End marker
+        file.close();
+
+        decrypt(EncryptedNumbers, shift, decryptedPassword);
+        cout << "Your password is: " << decryptedPassword << endl;
+
+    } else {
+        cout << "Invalid option." << endl;
+    }
+
+    return 0;
+}
